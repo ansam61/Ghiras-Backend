@@ -8,9 +8,9 @@ namespace Ghiras.Web.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IWebHostEnvironment _env;
-        private const string ApiUrl = "https://localhost:7267/api/Plants";
-        private const string CategoryApiUrl = "https://localhost:7267/api/PlantCategory";
-        private const string ImageApiUrl = "https://localhost:7267/api/PlantImage";
+        private const string ApiUrl = "http://localhost:5250/api/Plants";
+        private const string CategoryApiUrl = "http://localhost:5250/api/PlantCategory";
+        private const string ImageApiUrl = "http://localhost:5250/api/PlantImage";
 
         public PlantController(IHttpClientFactory httpClientFactory, IWebHostEnvironment env)
         {
@@ -234,10 +234,10 @@ namespace Ghiras.Web.Controllers
 
             return new List<SelectListItem>
             {
-                new SelectListItem { Value = "1", Text = "نباتات زينة داخلية" },
-                new SelectListItem { Value = "2", Text = "أشجار ومزروعات خارجية" },
-                new SelectListItem { Value = "3", Text = "صبارات وعصاريات" },
-                new SelectListItem { Value = "4", Text = "أعشاب خضراء ونباتات طبية" }
+                new SelectListItem { Value = "1", Text = "نباتات داخلية" },
+                new SelectListItem { Value = "2", Text = "نباتات خارجية" },
+                new SelectListItem { Value = "3", Text = "عصاريات وصبار" },
+                new SelectListItem { Value = "4", Text = "طبية وعطرية" }
             };
         }
 

@@ -39,6 +39,13 @@ namespace Ghiras.Infrastructure.Persistence
                 .WithMany(p => p.Images)
                 .HasForeignKey(img => img.PlantId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlantCategory>().HasData(
+                new PlantCategory { CategoryId = 1, CategoryName = "نباتات داخلية", Description = "مناسبة للغرف والمكاتب", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 2, CategoryName = "نباتات خارجية", Description = "للحدائق والبلكونات", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 3, CategoryName = "عصاريات وصبار", Description = "تحتمل الجفاف", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 4, CategoryName = "طبية وعطرية", Description = "نعناع ولافندر ورائحة زكية", CreatedAt = DateTime.UnixEpoch }
+            );
         }
     }
 }
