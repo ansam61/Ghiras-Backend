@@ -1,0 +1,40 @@
+@model Ghiras.Web.Models.PlantCategoryViewModel
+@{
+    ViewData["Title"] = "إضافة تصنيف جديد";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card-custom p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                <div>
+                    <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-plus-circle text-success me-2"></i> إضافة تصنيف جديد</h4>
+                    <p class="text-muted small m-0">أدخل تفاصيل التصنيف لتصنيف المزروعات في الدليل.</p>
+                </div>
+                <a href="/PlantCategory/Index" class="btn btn-light border">إلغاء</a>
+            </div>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                <div class="mb-3">
+                    <label asp-for="CategoryName" class="form-label fw-bold"></label>
+                    <input asp-for="CategoryName" class="form-control py-2" placeholder="مثال: نباتات زينة داخلية">
+                    <span asp-validation-for="CategoryName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label fw-bold"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="الوصف والخصائص العامة لنباتات هذا التصنيف..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="pt-3 border-top text-end">
+                    <button type="submit" class="btn btn-ghiras px-5 py-2">
+                        <i class="fa-solid fa-check-circle"></i> حفظ التصنيف
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

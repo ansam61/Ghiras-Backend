@@ -1,0 +1,70 @@
+@model IEnumerable<Ghiras.Web.Models.UserViewModel>
+@{
+    ViewData["Title"] = "إدارة المستخدمين";
+}
+
+<div class="card-custom p-4 mb-4">
+    <div class="row align-items-center g-3">
+        <div class="col-md-6">
+            <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-users text-success me-2"></i> إدارة المستخدمين وصلاحيات المنظومة</h4>
+            <p class="text-muted small m-0">استعرض قائمة الحسابات والمسؤولين والمشرفين الزراعيين.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="/Users/Create" class="btn btn-ghiras">
+                <i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="card-custom p-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">اسم المستخدم</th>
+                    <th scope="col">البريد الإلكتروني</th>
+                    <th scope="col">الصلاحية / الدور</th>
+                    <th scope="col">تاريخ الانضمام</th>
+                    <th scope="col" class="text-end">الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">#@user.UserId</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold" style="width: 34px; height: 34px; font-size: 0.85rem;">
+                                        @(string.IsNullOrEmpty(user.Username) ? "U" : user.Username[0].ToString().ToUpper())
+                                    </div>
+                                    <span class="fw-bold text-dark">@user.Username</span>
+                                </div>
+                            </td>
+                            <td class="text-muted">@user.Email</td>
+                            <td>
+                                <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold">@user.Role</span>
+                            </td>
+                            <td class="text-muted small">@user.CreatedAt.ToString("yyyy/MM/dd")</td>
+                            <td class="text-end">
+                                <a href="/Users/Delete/@user.UserId" onclick="return confirm('هل أنت تأكد من حذف هذا المستخدم؟');" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold">
+                                    <i class="fa-solid fa-trash me-1"></i> حذف
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">لا يوجد مستخدمون مضافون حالياً.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+@model Ghiras.Web.Models.PlantViewModel
+@{
+    ViewData["Title"] = "تفاصيل النبتة - " + Model.PlantName;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card-custom p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 bg-success-subtle text-success p-3 fs-3">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold m-0 text-dark">@Model.PlantName</h3>
+                        <span class="text-muted fst-italic">@(Model.ScientificName ?? "الاسم العلمي غير محدد")</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="/Plant/Edit/@Model.PlantId" class="btn btn-outline-ghiras">تعديل النبتة والصورة</a>
+                    <a href="/Plant/Index" class="btn btn-light border">العودة للدليل</a>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-5">
+                    <div class="bg-light rounded-4 p-3 text-center border h-100 d-flex flex-column align-items-center justify-content-center">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl" alt="@Model.PlantName" class="img-fluid rounded-3 object-fit-cover shadow-sm" style="max-height: 300px; width: 100%;">
+                        }
+                        else
+                        {
+                            <div class="py-5 text-success">
+                                <i class="fa-solid fa-leaf" style="font-size: 5rem;"></i>
+                                <p class="text-muted mt-2 mb-0">لا توجد صورة مسجلة في قاعدة البيانات</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="p-3 bg-light rounded-4 border mb-3">
+                        <span class="text-muted fw-bold d-block small mb-1">التصنيف النباتي</span>
+                        <span class="badge badge-ghiras fs-6">@(Model.CategoryName ?? "عام")</span>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-4 border">
+                        <span class="text-muted fw-bold d-block small mb-2"><i class="fa-solid fa-hand-holding-droplet text-success me-1"></i> إرشادات العناية اليومية</span>
+                        <p class="text-dark mb-0" style="line-height: 1.8;">
+                            @(string.IsNullOrEmpty(Model.CareInstructions) ? "لم يتم إضافة إرشادات عناية لهذه النبتة بعد." : Model.CareInstructions)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-top text-center">
+                <a href="/AIDiagnosis/Diagnose?plantId=@Model.PlantId" class="btn btn-ghiras px-4">
+                    <i class="fa-solid fa-brain"></i> فحص صحة ورقة النبتة بالذكاء الاصطناعي
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+@model Ghiras.Web.Models.PlantCategoryViewModel
+@{
+    ViewData["Title"] = "تعديل التصنيف";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card-custom p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                <div>
+                    <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-pen-to-square text-success me-2"></i> تعديل بيانات التصنيف</h4>
+                    <p class="text-muted small m-0">تحديث بيانات التصنيف رقم #@Model.CategoryId</p>
+                </div>
+                <a href="/PlantCategory/Index" class="btn btn-light border">إلغاء</a>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="CategoryId" />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                <div class="mb-3">
+                    <label asp-for="CategoryName" class="form-label fw-bold"></label>
+                    <input asp-for="CategoryName" class="form-control py-2">
+                    <span asp-validation-for="CategoryName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label fw-bold"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="pt-3 border-top text-end">
+                    <button type="submit" class="btn btn-ghiras px-5 py-2">
+                        <i class="fa-solid fa-save"></i> حفظ التعديلات
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

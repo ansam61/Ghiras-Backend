@@ -1,0 +1,105 @@
+@model Ghiras.Web.Models.AIDiagnosisViewModel
+@{
+    ViewData["Title"] = "إجراء فحص بالذكاء الاصطناعي";
+    bool isResultReady = ViewBag.IsResultReady ?? false;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card-custom p-4 p-md-5 mb-4">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                <div>
+                    <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-wand-magic-sparkles text-success me-2"></i> فحص تشخيص أوراق النبات بالذكاء الاصطناعي</h4>
+                    <p class="text-muted small m-0">ارفع صورة ورقة النبتة للتحليل الفوري والكشف عن الأمراض وتوصيات العلاج العضوي.</p>
+                </div>
+                <a href="/AIDiagnosis/Index" class="btn btn-light border">السجلات السابقة</a>
+            </div>
+
+            <div class="row g-4">
+                <!-- Upload Form Section -->
+                <div class="col-lg-6">
+                    <form asp-action="Diagnose" method="post" enctype="multipart/form-data" class="h-100 d-flex flex-column justify-content-between">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="PlantId" class="form-label fw-bold"></label>
+                            <select asp-for="PlantId" asp-items="Model.Plants" class="form-select py-2">
+                                <option value="">-- اختياري: حدد النبتة من الدليل --</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="UploadImage" class="form-label fw-bold"></label>
+                            <div class="border-2 border-dashed rounded-4 p-4 text-center bg-light">
+                                <i class="fa-solid fa-cloud-arrow-up text-success fs-1 mb-2"></i>
+                                <h6 class="fw-bold text-dark mb-1">اختر صورة ورقة النبتة</h6>
+                                <p class="text-muted small mb-3">الصغ المتاحة (JPG, PNG, WEBP)</p>
+                                <input asp-for="UploadImage" type="file" class="form-control" accept="image/*" required>
+                                <span asp-validation-for="UploadImage" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-ghiras w-100 py-3 justify-content-center mt-3">
+                            <i class="fa-solid fa-brain"></i> بدء التحليل بالذكاء الاصطناعي
+                        </button>
+                    </form>
+                </div>
+
+                <!-- AI Analysis Result Card -->
+                <div class="col-lg-6">
+                    @if (isResultReady)
+                    {
+                        <div class="card-custom p-4 bg-success-subtle border-success h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge bg-success text-white px-3 py-2 rounded-pill fs-6">
+                                        <i class="fa-solid fa-circle-check me-1"></i> اكمل التحليل بنجاح
+                                    </span>
+                                    <small class="text-muted">@Model.DiagnosisDate.ToString("hh:mm tt")</small>
+                                </div>
+
+                                <div class="text-center my-3">
+                                    <img src="@Model.SampleImageUrl" alt="صورة الفحص" class="img-fluid rounded-3 border shadow-sm" style="max-height: 160px; object-fit: cover;">
+                                </div>
+
+                                <div class="bg-white p-3 rounded-3 border mb-3">
+                                    <span class="text-muted small d-block fw-bold mb-1">المرض المكتشف:</span>
+                                    <h5 class="fw-bold text-danger m-0">@Model.DiseaseName</h5>
+                                </div>
+
+                                <div class="bg-white p-3 rounded-3 border mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="text-muted small fw-bold">نسبة دقة التشخيص:</span>
+                                        <span class="fw-bold text-success">@Model.ConfidenceRate%</span>
+                                    </div>
+                                    <div class="progress" style="height: 10px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.ConfidenceRate%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded-3 border">
+                                    <span class="text-muted small d-block fw-bold mb-1"><i class="fa-solid fa-seedling text-success me-1"></i> العلاج العضوي الموصى به:</span>
+                                    <p class="text-dark small mb-0" style="line-height: 1.7;">@Model.OrganicTreatment</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 text-center">
+                                <a href="/AIDiagnosis/Index" class="btn btn-sm btn-outline-ghiras w-100">عرض جميع السجلات</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="border rounded-4 p-5 text-center h-100 d-flex flex-column align-items-center justify-content-center bg-light">
+                            <div class="rounded-circle bg-white p-4 shadow-sm mb-3 text-success">
+                                <i class="fa-solid fa-microscope" style="font-size: 3rem;"></i>
+                            </div>
+                            <h5 class="fw-bold text-dark">بانتظار رفع الصورة</h5>
+                            <p class="text-muted small mb-0" style="max-width: 320px;">قم برفع صورة الورقة من النموذج المجاور واضغط على "بدء التحليل" لعرض نتائج التشخيص وتوصيات العلاج مباشرة هنا.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

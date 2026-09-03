@@ -1,0 +1,154 @@
+@model Ghiras.Web.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "لوحة التحكم الرئيسية";
+}
+
+<div class="row g-4 mb-4">
+    <!-- Stat Card 1 -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card-custom p-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted fw-bold d-block mb-1" style="font-size: 0.88rem;">إجمالي النباتات المسجلة</span>
+                    <h3 class="fw-extrabold m-0 text-dark" style="font-size: 2rem;">@Model.TotalPlants</h3>
+                </div>
+                <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: #e8f5e9; color: #2e7d32; font-size: 1.6rem;">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Card 2 -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card-custom p-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted fw-bold d-block mb-1" style="font-size: 0.88rem;">تصنيفات المزروعات</span>
+                    <h3 class="fw-extrabold m-0 text-dark" style="font-size: 2rem;">@Model.TotalCategories</h3>
+                </div>
+                <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: #e0f2fe; color: #0284c7; font-size: 1.6rem;">
+                    <i class="fa-solid fa-tags"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Card 3 -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card-custom p-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted fw-bold d-block mb-1" style="font-size: 0.88rem;">فحوصات الذكاء الاصطناعي</span>
+                    <h3 class="fw-extrabold m-0 text-dark" style="font-size: 2rem;">@Model.TotalDiagnoses</h3>
+                </div>
+                <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: #fef3c7; color: #d97706; font-size: 1.6rem;">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Card 4 -->
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="card-custom p-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted fw-bold d-block mb-1" style="font-size: 0.88rem;">المستخدمين والخبراء</span>
+                    <h3 class="fw-extrabold m-0 text-dark" style="font-size: 2rem;">@Model.TotalUsers</h3>
+                </div>
+                <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: #f3e8ff; color: #9333ea; font-size: 1.6rem;">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Banner Call to Action -->
+<div class="card-custom p-4 mb-4 text-white" style="background: linear-gradient(135deg, #1b5e20, #2e7d32); border-radius: 20px;">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h4 class="fw-bold mb-2"><i class="fa-solid fa-wand-magic-sparkles me-2"></i> فحص أمراض النباتات باستخدام الذكاء الاصطناعي</h4>
+            <p class="mb-0 text-white-50">قم برفع صورة ورقة النبتة للتعرف على نوع المرض، نسبة الثقة في التشخيص، وتلقي بروتوكول العلاج العضوي الموصى به فوراً.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+            <a href="/AIDiagnosis/Diagnose" class="btn btn-light rounded-pill px-4 py-2 fw-bold text-success">
+                بدء تشخيص الآن <i class="fa-solid fa-arrow-left ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Recent AI Diagnoses -->
+    <div class="col-lg-7">
+        <div class="card-custom p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h5 class="fw-bold m-0 text-dark"><i class="fa-solid fa-clock-rotate-left text-success me-2"></i> أحدث عمليات الفحص بالذكاء الاصطناعي</h5>
+                <a href="/AIDiagnosis/Index" class="btn btn-sm btn-outline-ghiras">عرض الكل</a>
+            </div>
+
+            @if (Model.RecentDiagnoses.Any())
+            {
+                <div class="d-flex flex-column gap-3">
+                    @foreach (var item in Model.RecentDiagnoses)
+                    {
+                        <div class="p-3 rounded-4 bg-light border d-flex align-items-center justify-content-between gap-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="rounded-3 bg-white p-2 border text-center" style="width: 48px; height: 48px;">
+                                    <i class="fa-solid fa-bug text-danger fs-5"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold m-0 text-dark">@item.DiseaseName</h6>
+                                    <small class="text-muted">النبتة: @(item.PlantName ?? "غير محددة") • @item.DiagnosisDate.ToString("yyyy/MM/dd")</small>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold">ثقة @item.ConfidenceRate%</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted text-center py-4 mb-0">لا توجد عمليات تشخيص سابقة مضافة بعد.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Quick Actions & Recent Plants -->
+    <div class="col-lg-5">
+        <div class="card-custom p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h5 class="fw-bold m-0 text-dark"><i class="fa-solid fa-seedling text-success me-2"></i> دليل النباتات المضافة حديثاً</h5>
+                <a href="/Plant/Index" class="btn btn-sm btn-outline-ghiras">إدارة النباتات</a>
+            </div>
+
+            <div class="d-flex flex-column gap-3">
+                @foreach (var plant in Model.RecentPlants)
+                {
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 border">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px;">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold m-0 text-dark">@plant.PlantName</h6>
+                                <small class="text-muted">@plant.ScientificName</small>
+                            </div>
+                        </div>
+                        <a href="/Plant/Details/@plant.PlantId" class="btn btn-sm btn-light border rounded-pill">التفاصيل</a>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-4 pt-3 border-top">
+                <a href="/Plant/Create" class="btn btn-ghiras w-100 justify-content-center">
+                    <i class="fa-solid fa-plus-circle"></i> إضافة نبتة جديدة للدليل
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

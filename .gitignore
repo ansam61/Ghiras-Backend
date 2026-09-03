@@ -1,0 +1,29 @@
+# Ignore Flutter app (tracked in separate repository)
+ghiras_app/
+
+# Visual Studio & .NET Build Output
+.vs/
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+[Dd]ebug/
+[RRelease/
+x64/
+x86/
+build/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Packages
+*.nupkg
+packages/
+
+# Logs
+*.log

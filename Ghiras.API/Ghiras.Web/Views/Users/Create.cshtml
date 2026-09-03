@@ -1,0 +1,56 @@
+@model Ghiras.Web.Models.UserViewModel
+@{
+    ViewData["Title"] = "إضافة مستخدم جديد";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card-custom p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                <div>
+                    <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-user-plus text-success me-2"></i> إضافة مستخدم جديد للنظام</h4>
+                    <p class="text-muted small m-0">أنشئ حساباً جديداً وحدد صلاحياته في منصة غراس.</p>
+                </div>
+                <a href="/Users/Index" class="btn btn-light border">إلغاء</a>
+            </div>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Username" class="form-label fw-bold"></label>
+                    <input asp-for="Username" class="form-control py-2" placeholder="مثال: أحمد العتيبي">
+                    <span asp-validation-for="Username" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-bold"></label>
+                    <input asp-for="Email" type="email" class="form-control py-2" placeholder="user@ghiras.sa">
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label fw-bold"></label>
+                    <input asp-for="Password" type="password" class="form-control py-2" placeholder="••••••••">
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Role" class="form-label fw-bold"></label>
+                    <select asp-for="Role" class="form-select py-2">
+                        <option value="المسؤول الرئيسي">المسؤول الرئيسي (Admin)</option>
+                        <option value="مشرف زراعي">مشرف زراعي (Supervisor)</option>
+                        <option value="مستخدم رئيسي">مستخدم رئيسي (User)</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger small"></span>
+                </div>
+
+                <div class="pt-3 border-top text-end">
+                    <button type="submit" class="btn btn-ghiras px-5 py-2">
+                        <i class="fa-solid fa-check-circle"></i> إنشاء الحساب
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

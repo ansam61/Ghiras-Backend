@@ -1,0 +1,80 @@
+@model IEnumerable<Ghiras.Web.Models.AIDiagnosisViewModel>
+@{
+    ViewData["Title"] = "سجل تشخيص الأمراض بالذكاء الاصطناعي";
+}
+
+<div class="card-custom p-4 mb-4">
+    <div class="row align-items-center g-3">
+        <div class="col-md-7">
+            <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-brain text-success me-2"></i> سجلات التشخيص والتحليل بالذكاء الاصطناعي</h4>
+            <p class="text-muted small m-0">استعرض الفحوصات الطبية السابقة للنباتات وتوصيات العلاج العضوي المعتمدة.</p>
+        </div>
+        <div class="col-md-5 text-md-end">
+            <a href="/AIDiagnosis/Diagnose" class="btn btn-ghiras">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> إجراء فحص جديد الآن
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var diagnosis in Model)
+        {
+            <div class="col-12 col-lg-6">
+                <div class="card-custom p-4 h-100 border">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-3 bg-danger-subtle text-danger p-3 fs-4">
+                                <i class="fa-solid fa-bug"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark m-0">@diagnosis.DiseaseName</h5>
+                                <small class="text-muted">النبتة المرتبطة: @(diagnosis.PlantName ?? "غير محددة") • @diagnosis.DiagnosisDate.ToString("yyyy/MM/dd - hh:mm tt")</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress bar for confidence rate -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-bold text-muted">نسبة ثقة الذكاء الاصطناعي</span>
+                            <span class="small fw-bold text-success">@diagnosis.ConfidenceRate%</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: @diagnosis.ConfidenceRate%;" aria-valuenow="@diagnosis.ConfidenceRate" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <!-- Organic Treatment Recommendation -->
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <span class="d-block fw-bold text-success small mb-1">
+                            <i class="fa-solid fa-seedling me-1"></i> العلاج العضوي المقترح:
+                        </span>
+                        <p class="small text-dark mb-0" style="line-height: 1.7;">
+                            @(string.IsNullOrEmpty(diagnosis.OrganicTreatment) ? "لم يتم تحديد علاج عضوي محدد." : diagnosis.OrganicTreatment)
+                        </p>
+                    </div>
+
+                    <div class="pt-2 text-end">
+                        <a href="/AIDiagnosis/Delete/@diagnosis.DiagnosisId" onclick="return confirm('هل ترغب في حذف سجل التشخيص هذا؟');" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold">
+                            <i class="fa-solid fa-trash me-1"></i> حذف السجل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="card-custom p-5 text-center">
+                <i class="fa-solid fa-robot text-muted mb-3" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold text-dark">لا توجد فحوصات سابقة</h5>
+                <p class="text-muted">قم بإجراء أول فحص لأوراق النباتات باستخدام الذكاء الاصطناعي.</p>
+                <a href="/AIDiagnosis/Diagnose" class="btn btn-ghiras mt-2">إجراء فحص جديد</a>
+            </div>
+        </div>
+    }
+</div>

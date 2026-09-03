@@ -1,0 +1,90 @@
+@model Ghiras.Web.Models.PlantViewModel
+@{
+    ViewData["Title"] = "إضافة نبتة جديدة";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card-custom p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                <div>
+                    <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-plus-circle text-success me-2"></i> إضافة نبتة جديدة للدليل</h4>
+                    <p class="text-muted small m-0">أدخل معلومات النبتة، اسمها العلمي، واختر صورتها المميزة.</p>
+                </div>
+                <a href="/Plant/Index" class="btn btn-light border">إلغاء وعودة</a>
+            </div>
+
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="PlantName" class="form-label fw-bold"></label>
+                        <input asp-for="PlantName" class="form-control py-2" placeholder="مثال: نبتة البوتس">
+                        <span asp-validation-for="PlantName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ScientificName" class="form-label fw-bold"></label>
+                        <input asp-for="ScientificName" class="form-control py-2" placeholder="مثال: Epipremnum aureum">
+                        <span asp-validation-for="ScientificName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="CategoryId" class="form-label fw-bold"></label>
+                        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select py-2">
+                            <option value="">-- اختر التصنيف المناسب --</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Interactive Image File Selection & Preview -->
+                    <div class="col-md-6">
+                        <label asp-for="ImageFile" class="form-label fw-bold"></label>
+                        <input asp-for="ImageFile" type="file" id="imageInput" class="form-control py-2" accept="image/*" onchange="previewSelectedImage(this)">
+                        <span asp-validation-for="ImageFile" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Live Image Preview Box -->
+                    <div class="col-12" id="previewContainer" style="display: none;">
+                        <div class="p-3 bg-light rounded-4 border text-center">
+                            <span class="d-block text-muted small fw-bold mb-2">معاينة الصورة المختارة للنبتة:</span>
+                            <img id="imagePreview" src="#" alt="معاينة الصورة" class="img-fluid rounded-3 shadow-sm" style="max-height: 200px; object-fit: cover;">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="CareInstructions" class="form-label fw-bold"></label>
+                        <textarea asp-for="CareInstructions" class="form-control" rows="4" placeholder="اكتب تعليمات وإرشادات العناية اليومية بالنبتة (كميات الري، التسميد، التعرض للشمس)..."></textarea>
+                        <span asp-validation-for="CareInstructions" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-top text-end">
+                    <button type="submit" class="btn btn-ghiras px-5 py-2">
+                        <i class="fa-solid fa-check-circle"></i> حفظ النبتة والصورة
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function previewSelectedImage(input) {
+            const container = document.getElementById('previewContainer');
+            const preview = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    container.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                container.style.display = 'none';
+            }
+        }
+    </script>
+}

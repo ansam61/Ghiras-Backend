@@ -1,0 +1,66 @@
+@model IEnumerable<Ghiras.Web.Models.PlantCategoryViewModel>
+@{
+    ViewData["Title"] = "تصنيفات النباتات";
+}
+
+<div class="card-custom p-4 mb-4">
+    <div class="row align-items-center g-3">
+        <div class="col-md-6">
+            <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-tags text-success me-2"></i> تصنيفات المزروعات والنباتات</h4>
+            <p class="text-muted small m-0">إدارة فئات النباتات وتنظيمها في أقسام محددة.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="/PlantCategory/Create" class="btn btn-ghiras">
+                <i class="fa-solid fa-plus-circle"></i> إضافة تصنيف جديد
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card-custom p-4 h-100 d-flex flex-column">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="rounded-3 bg-success-subtle text-success p-3 fs-4">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <span class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-2">
+                            @item.PlantsCount نباتات
+                        </span>
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-2">@item.CategoryName</h5>
+                    <p class="text-muted small flex-grow-1 mb-3" style="line-height: 1.6;">
+                        @(string.IsNullOrEmpty(item.Description) ? "لا يوجد وصف محدد لهذا التصنيف." : item.Description)
+                    </p>
+
+                    <div class="pt-3 border-top d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <small class="text-muted">تاريخ: @item.CreatedAt.ToString("yyyy/MM/dd")</small>
+                        <div class="d-flex gap-2">
+                            <a href="/PlantCategory/Edit/@item.CategoryId" class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-bold" title="تعديل التصنيف">
+                                <i class="fa-solid fa-pen-to-square me-1"></i> تعديل
+                            </a>
+                            <a href="/PlantCategory/Delete/@item.CategoryId" onclick="return confirm('هل أنت متأكد من حذف هذا التصنيف؟');" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold" title="حذف التصنيف">
+                                <i class="fa-solid fa-trash me-1"></i> حذف
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="card-custom p-5 text-center">
+                <i class="fa-solid fa-tags text-muted mb-3" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold text-dark">لا توجد تصنيفات مضافة بعد</h5>
+                <p class="text-muted">قم بإضافة أول تصنيف لتنظيم دليل النباتات.</p>
+            </div>
+        </div>
+    }
+</div>

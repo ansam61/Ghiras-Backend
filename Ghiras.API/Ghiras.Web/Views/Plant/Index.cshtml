@@ -1,0 +1,100 @@
+@model IEnumerable<Ghiras.Web.Models.PlantViewModel>
+@{
+    ViewData["Title"] = "دليل وإدارة النباتات";
+}
+
+<div class="card-custom p-4 mb-4">
+    <div class="row align-items-center g-3">
+        <div class="col-md-6">
+            <h4 class="fw-bold m-0 text-dark"><i class="fa-solid fa-leaf text-success me-2"></i> دليل النباتات والمزروعات</h4>
+            <p class="text-muted small m-0">استعرض قائمة النباتات المسجلة وصورها المرفوعة مع إرشادات العناية.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="/Plant/Create" class="btn btn-ghiras">
+                <i class="fa-solid fa-plus-circle"></i> إضافة نبتة واختيار صورة
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Search & Filter Bar -->
+<div class="card-custom p-3 mb-4">
+    <form method="get" action="/Plant/Index" class="row g-3">
+        <div class="col-md-8">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                <input type="text" name="searchString" value="@ViewData["SearchString"]" class="form-control border-start-0 ps-0" placeholder="ابحث باسم النبتة أو الاسم العلمي...">
+            </div>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-ghiras w-100 justify-content-center">بحث</button>
+            <a href="/Plant/Index" class="btn btn-light border">إلغاء</a>
+        </div>
+    </form>
+</div>
+
+<!-- Plants Grid -->
+<div class="row g-4">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var plant in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card-custom h-100 d-flex flex-column overflow-hidden">
+                    <div class="position-relative bg-light text-center p-0 border-bottom" style="height: 200px;">
+                        @if (!string.IsNullOrEmpty(plant.ImageUrl))
+                        {
+                            <img src="@plant.ImageUrl" alt="@plant.PlantName" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-100 d-flex align-items-center justify-content-center text-success bg-light\' style=\'font-size: 4rem;\'><i class=\'fa-solid fa-seedling\'></i></div>';">
+                        }
+                        else if (plant.Images != null && plant.Images.Any())
+                        {
+                            <img src="@plant.Images.First().ImageUrl" alt="@plant.PlantName" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-100 d-flex align-items-center justify-content-center text-success bg-light\' style=\'font-size: 4rem;\'><i class=\'fa-solid fa-seedling\'></i></div>';">
+                        }
+                        else
+                        {
+                            <div class="h-100 d-flex align-items-center justify-content-center text-success bg-light" style="font-size: 4rem;">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                        }
+                        <span class="position-absolute top-0 end-0 m-3 badge badge-ghiras shadow-sm">
+                            @(plant.CategoryName ?? "زراعة عامة")
+                        </span>
+                    </div>
+
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <h5 class="fw-bold text-dark mb-1">@plant.PlantName</h5>
+                        <small class="text-muted fst-italic mb-3 d-block">@(plant.ScientificName ?? "غير محدد")</small>
+
+                        <p class="text-muted small flex-grow-1 mb-3" style="line-height: 1.6;">
+                            @(string.IsNullOrEmpty(plant.CareInstructions) ? "لا توجد إرشادات عناية مدونة حتى الآن." : (plant.CareInstructions.Length > 90 ? plant.CareInstructions.Substring(0, 90) + "..." : plant.CareInstructions))
+                        </p>
+
+                        <div class="pt-3 border-top d-flex gap-2 justify-content-between align-items-center flex-wrap">
+                            <a href="/Plant/Details/@plant.PlantId" class="btn btn-sm btn-outline-ghiras px-3 rounded-pill fw-bold">
+                                <i class="fa-solid fa-eye me-1"></i> التفاصيل
+                            </a>
+                            <div class="d-flex gap-2">
+                                <a href="/Plant/Edit/@plant.PlantId" class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-bold" title="تعديل النبتة">
+                                    <i class="fa-solid fa-pen-to-square me-1"></i> تعديل
+                                </a>
+                                <a href="/Plant/Delete/@plant.PlantId" onclick="return confirm('هل أنت تأكد من حذف هذه النبتة؟');" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-bold" title="حذف النبتة">
+                                    <i class="fa-solid fa-trash me-1"></i> حذف
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="card-custom p-5 text-center">
+                <i class="fa-solid fa-leaf text-muted mb-3" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold text-dark">لا توجد نباتات مطابقة للبحث</h5>
+                <p class="text-muted">قم بإضافة نباتات جديدة واختيار صورها.</p>
+            </div>
+        </div>
+    }
+</div>
