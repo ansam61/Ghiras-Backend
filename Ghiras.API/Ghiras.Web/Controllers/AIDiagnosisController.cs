@@ -8,8 +8,8 @@ namespace Ghiras.Web.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IWebHostEnvironment _env;
-        private const string ApiUrl = "https://localhost:7267/api/AIDiagnosis";
-        private const string PlantApiUrl = "https://localhost:7267/api/Plants";
+        private const string ApiUrl = "http://localhost:5250/api/AIDiagnosis";
+        private const string PlantApiUrl = "http://localhost:5250/api/Plants";
 
         public AIDiagnosisController(IHttpClientFactory httpClientFactory, IWebHostEnvironment env)
         {

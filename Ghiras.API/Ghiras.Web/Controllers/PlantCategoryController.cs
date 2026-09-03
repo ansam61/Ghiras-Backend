@@ -6,7 +6,7 @@ namespace Ghiras.Web.Controllers
     public class PlantCategoryController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private const string ApiUrl = "https://localhost:7267/api/PlantCategory";
+        private const string ApiUrl = "http://localhost:5250/api/PlantCategory";
 
         public PlantCategoryController(IHttpClientFactory httpClientFactory)
         {
@@ -27,9 +27,10 @@ namespace Ghiras.Web.Controllers
             {
                 categories = new List<PlantCategoryViewModel>
                 {
-                    new PlantCategoryViewModel { CategoryId = 1, CategoryName = "نباتات زينة داخلية", Description = "نباتات تناسب الجو الداخلي المنازل والمكاتب", PlantsCount = 8, CreatedAt = DateTime.Now.AddDays(-30) },
-                    new PlantCategoryViewModel { CategoryId = 2, CategoryName = "أشجار ومزروعات خارجية", Description = "أشجار مثمرة ونباتات حدائقتحتمل أشعة الشمس", PlantsCount = 15, CreatedAt = DateTime.Now.AddDays(-20) },
-                    new PlantCategoryViewModel { CategoryId = 3, CategoryName = "صبارات وعصاريات", Description = "نباتات متحملة للجفاف والظروف القاسية", PlantsCount = 6, CreatedAt = DateTime.Now.AddDays(-10) }
+                    new PlantCategoryViewModel { CategoryId = 1, CategoryName = "نباتات داخلية", Description = "مناسبة للغرف والمكاتب", PlantsCount = 8, CreatedAt = DateTime.Now.AddDays(-30) },
+                    new PlantCategoryViewModel { CategoryId = 2, CategoryName = "نباتات خارجية", Description = "للحدائق والبلكونات", PlantsCount = 15, CreatedAt = DateTime.Now.AddDays(-20) },
+                    new PlantCategoryViewModel { CategoryId = 3, CategoryName = "عصاريات وصبار", Description = "تحتمل الجفاف", PlantsCount = 6, CreatedAt = DateTime.Now.AddDays(-10) },
+                    new PlantCategoryViewModel { CategoryId = 4, CategoryName = "طبية وعطرية", Description = "نعناع ولافندر ورائحة زكية", PlantsCount = 4, CreatedAt = DateTime.Now.AddDays(-5) }
                 };
             }
 
