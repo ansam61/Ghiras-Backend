@@ -22,6 +22,12 @@ namespace Ghiras.Infrastructure.Persistence
             modelBuilder.Entity<AIDiagnosis>()
                 .HasKey(d => d.DiagnosisId);
 
+            modelBuilder.Entity<AIDiagnosis>()
+                .HasOne(d => d.Plant)
+                .WithMany(p => p.Diagnoses)
+                .HasForeignKey(d => d.PlantId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Plant>()
                 .HasKey(p => p.PlantId);
 

@@ -75,6 +75,20 @@ namespace Ghiras.Infrastructure.Repositories
             var plant = await _context.Plants.FindAsync(id);
             if (plant != null)
             {
+                // إزالة سجلات الفحص والتشخيص المرتبطة بالنبتة لتجنب تعارض القيود الخارجية FK_AIDiagnoses_Plants_PlantId
+                var diagnoses = await _context.AIDiagnoses.Where(d => d.PlantId == id).ToListAsync();
+                if (diagnoses.Any())
+                {
+                    _context.AIDiagnoses.RemoveRange(diagnoses);
+                }
+
+                // إزالة سجلات الصور المرتبطة للنبتة
+                var images = await _context.PlantImages.Where(img => img.PlantId == id).ToListAsync();
+                if (images.Any())
+                {
+                    _context.PlantImages.RemoveRange(images);
+                }
+
                 _context.Plants.Remove(plant);
                 await _context.SaveChangesAsync();
             }
