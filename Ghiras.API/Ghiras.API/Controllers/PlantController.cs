@@ -21,7 +21,7 @@ namespace Ghiras.API.Controllers
             var plants = await _plantRepository.GetAllAsync();
             if (userId.HasValue && userId.Value > 0)
             {
-                plants = plants.Where(p => p.UserId == null || p.UserId == userId.Value);
+                plants = plants.Where(p => p.UserId == userId.Value);
             }
             return Ok(plants);
         }

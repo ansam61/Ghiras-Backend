@@ -41,26 +41,13 @@ using (var scope = app.Services.CreateScope())
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         dbContext.Database.EnsureCreated();
 
-        // التأكد التلقائي من وجود عمود UserId في جدول Plants بقاعدة البيانات
+        // تنظيف البيانات والتأكد من عدم وجود نباتات قديمة بدون UserId أو نباتات تجريبية
         dbContext.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Plants]') AND name = 'UserId')
+            IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Plants')
             BEGIN
-                ALTER TABLE [dbo].[Plants] ADD [UserId] INT NULL;
-            END
-        ");
-
-        // التأكد التلقائي من وجود جدول PlantImages في قاعدة البيانات
-        dbContext.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'PlantImages')
-            BEGIN
-                CREATE TABLE [dbo].[PlantImages] (
-                    [ImageId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-                    [PlantId] INT NOT NULL,
-                    [ImageUrl] NVARCHAR(MAX) NOT NULL,
-                    [IsPrimary] BIT NOT NULL DEFAULT 1,
-                    [UploadedAt] DATETIME2 NOT NULL DEFAULT GETDATE(),
-                    CONSTRAINT [FK_PlantImages_Plants_PlantId] FOREIGN KEY ([PlantId]) REFERENCES [dbo].[Plants] ([PlantId]) ON DELETE CASCADE
-                );
+                DELETE FROM [dbo].[AIDiagnoses] WHERE [PlantId] IN (SELECT [PlantId] FROM [dbo].[Plants] WHERE [UserId] IS NULL);
+                DELETE FROM [dbo].[PlantImages] WHERE [PlantId] IN (SELECT [PlantId] FROM [dbo].[Plants] WHERE [UserId] IS NULL);
+                DELETE FROM [dbo].[Plants] WHERE [UserId] IS NULL;
             END
         ");
     }
