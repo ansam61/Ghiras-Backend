@@ -27,10 +27,12 @@ namespace Ghiras.Web.Controllers
             {
                 categories = new List<PlantCategoryViewModel>
                 {
-                    new PlantCategoryViewModel { CategoryId = 1, CategoryName = "نباتات داخلية", Description = "مناسبة للغرف والمكاتب", PlantsCount = 8, CreatedAt = DateTime.Now.AddDays(-30) },
-                    new PlantCategoryViewModel { CategoryId = 2, CategoryName = "نباتات خارجية", Description = "للحدائق والبلكونات", PlantsCount = 15, CreatedAt = DateTime.Now.AddDays(-20) },
-                    new PlantCategoryViewModel { CategoryId = 3, CategoryName = "عصاريات وصبار", Description = "تحتمل الجفاف", PlantsCount = 6, CreatedAt = DateTime.Now.AddDays(-10) },
-                    new PlantCategoryViewModel { CategoryId = 4, CategoryName = "طبية وعطرية", Description = "نعناع ولافندر ورائحة زكية", PlantsCount = 4, CreatedAt = DateTime.Now.AddDays(-5) }
+                    new PlantCategoryViewModel { CategoryId = 1, CategoryName = "نباتات زينة داخلية", Description = "نباتات مخصصة للزينة الداخلية والمنازل", PlantsCount = 8, CreatedAt = DateTime.Now.AddDays(-30) },
+                    new PlantCategoryViewModel { CategoryId = 2, CategoryName = "نباتات ظلية", Description = "نباتات تناسب المساحات المغلقة", PlantsCount = 5, CreatedAt = DateTime.Now.AddDays(-25) },
+                    new PlantCategoryViewModel { CategoryId = 3, CategoryName = "أعشاب ونباتات طبية", Description = "نباتات تُستخدم في الطهي أو التداوي والاستخدامات العطرية", PlantsCount = 4, CreatedAt = DateTime.Now.AddDays(-20) },
+                    new PlantCategoryViewModel { CategoryId = 4, CategoryName = "خضروات وفواكه", Description = "نباتات إنتاجية ذات ثمار ونفع غذائي", PlantsCount = 15, CreatedAt = DateTime.Now.AddDays(-15) },
+                    new PlantCategoryViewModel { CategoryId = 5, CategoryName = "عصاريات وصبارات", Description = "نباتات متحملة للجفاف وتحتمل قلة الري", PlantsCount = 6, CreatedAt = DateTime.Now.AddDays(-10) },
+                    new PlantCategoryViewModel { CategoryId = 6, CategoryName = "نباتات مائية", Description = "نباتات تنمو وتعيش في البيئة المائية", PlantsCount = 3, CreatedAt = DateTime.Now.AddDays(-5) }
                 };
             }
 

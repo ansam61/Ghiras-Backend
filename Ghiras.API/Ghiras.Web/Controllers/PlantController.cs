@@ -32,9 +32,9 @@ namespace Ghiras.Web.Controllers
             {
                 plants = new List<PlantViewModel>
                 {
-                    new PlantViewModel { PlantId = 1, PlantName = "نبتة البوتس (اللبلاب)", ScientificName = "Epipremnum aureum", CategoryName = "نباتات زينة داخلية", ImageUrl = "/images/pothos.jpg", CareInstructions = "الري مرة أسبوعياً، وإبعادها عن الشمس المباشرة." },
-                    new PlantViewModel { PlantId = 2, PlantName = "شجرة الزيتون", ScientificName = "Olea europaea", CategoryName = "أشجار خضراء", ImageUrl = "/images/olive.jpg", CareInstructions = "تحتاج شمس مباشرة وري معتدل." },
-                    new PlantViewModel { PlantId = 3, PlantName = "نبتة الألوفيرا", ScientificName = "Aloe vera", CategoryName = "صبارات وعصاريات", ImageUrl = "/images/aloe.jpg", CareInstructions = "ري خفيف جداً كل أسبوعين." }
+                    new PlantViewModel { PlantId = 1, PlantName = "نبتة البوتس (اللبلاب)", ScientificName = "Epipremnum aureum", CategoryId = 1, CategoryName = "نباتات زينة داخلية", ImageUrl = "/images/pothos.jpg", CareInstructions = "الري مرة أسبوعياً، وإبعادها عن الشمس المباشرة." },
+                    new PlantViewModel { PlantId = 2, PlantName = "شجرة الزيتون", ScientificName = "Olea europaea", CategoryId = 4, CategoryName = "خضروات وفواكه", ImageUrl = "/images/olive.jpg", CareInstructions = "تحتاج شمس مباشرة وري معتدل." },
+                    new PlantViewModel { PlantId = 3, PlantName = "نبتة الألوفيرا", ScientificName = "Aloe vera", CategoryId = 5, CategoryName = "عصاريات وصبارات", ImageUrl = "/images/aloe.jpg", CareInstructions = "ري خفيف جداً كل أسبوعين." }
                 };
             }
 
@@ -234,10 +234,12 @@ namespace Ghiras.Web.Controllers
 
             return new List<SelectListItem>
             {
-                new SelectListItem { Value = "1", Text = "نباتات داخلية" },
-                new SelectListItem { Value = "2", Text = "نباتات خارجية" },
-                new SelectListItem { Value = "3", Text = "عصاريات وصبار" },
-                new SelectListItem { Value = "4", Text = "طبية وعطرية" }
+                new SelectListItem { Value = "1", Text = "نباتات زينة داخلية" },
+                new SelectListItem { Value = "2", Text = "نباتات ظلية" },
+                new SelectListItem { Value = "3", Text = "أعشاب ونباتات طبية" },
+                new SelectListItem { Value = "4", Text = "خضروات وفواكه" },
+                new SelectListItem { Value = "5", Text = "عصاريات وصبارات" },
+                new SelectListItem { Value = "6", Text = "نباتات مائية" }
             };
         }
 

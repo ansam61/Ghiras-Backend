@@ -53,10 +53,12 @@ namespace Ghiras.Infrastructure.Persistence
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PlantCategory>().HasData(
-                new PlantCategory { CategoryId = 1, CategoryName = "نباتات داخلية", Description = "مناسبة للغرف والمكاتب", CreatedAt = DateTime.UnixEpoch },
-                new PlantCategory { CategoryId = 2, CategoryName = "نباتات خارجية", Description = "للحدائق والبلكونات", CreatedAt = DateTime.UnixEpoch },
-                new PlantCategory { CategoryId = 3, CategoryName = "عصاريات وصبار", Description = "تحتمل الجفاف", CreatedAt = DateTime.UnixEpoch },
-                new PlantCategory { CategoryId = 4, CategoryName = "طبية وعطرية", Description = "نعناع ولافندر ورائحة زكية", CreatedAt = DateTime.UnixEpoch }
+                new PlantCategory { CategoryId = 1, CategoryName = "نباتات زينة داخلية", Description = "نباتات مخصصة للزينة الداخلية والمنازل", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 2, CategoryName = "نباتات ظلية", Description = "نباتات تناسب المساحات المغلقة", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 3, CategoryName = "أعشاب ونباتات طبية", Description = "نباتات تُستخدم في الطهي أو التداوي والاستخدامات العطرية", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 4, CategoryName = "خضروات وفواكه", Description = "نباتات إنتاجية ذات ثمار ونفع غذائي", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 5, CategoryName = "عصاريات وصبارات", Description = "نباتات متحملة للجفاف وتحتمل قلة الري", CreatedAt = DateTime.UnixEpoch },
+                new PlantCategory { CategoryId = 6, CategoryName = "نباتات مائية", Description = "نباتات تنمو وتعيش في البيئة المائية", CreatedAt = DateTime.UnixEpoch }
             );
         }
     }
