@@ -30,12 +30,7 @@ namespace Ghiras.Web.Controllers
             }
             catch
             {
-                plants = new List<PlantViewModel>
-                {
-                    new PlantViewModel { PlantId = 1, PlantName = "نبتة البوتس (اللبلاب)", ScientificName = "Epipremnum aureum", CategoryId = 1, CategoryName = "نباتات زينة داخلية", ImageUrl = "/images/pothos.jpg", CareInstructions = "الري مرة أسبوعياً، وإبعادها عن الشمس المباشرة." },
-                    new PlantViewModel { PlantId = 2, PlantName = "شجرة الزيتون", ScientificName = "Olea europaea", CategoryId = 4, CategoryName = "خضروات وفواكه", ImageUrl = "/images/olive.jpg", CareInstructions = "تحتاج شمس مباشرة وري معتدل." },
-                    new PlantViewModel { PlantId = 3, PlantName = "نبتة الألوفيرا", ScientificName = "Aloe vera", CategoryId = 5, CategoryName = "عصاريات وصبارات", ImageUrl = "/images/aloe.jpg", CareInstructions = "ري خفيف جداً كل أسبوعين." }
-                };
+                plants = new List<PlantViewModel>();
             }
 
             if (!string.IsNullOrEmpty(searchString))
@@ -64,16 +59,7 @@ namespace Ghiras.Web.Controllers
             }
             catch
             {
-                var mock = new PlantViewModel
-                {
-                    PlantId = id,
-                    PlantName = "نبتة البوتس (اللبلاب)",
-                    ScientificName = "Epipremnum aureum",
-                    CategoryName = "نباتات زينة داخلية",
-                    ImageUrl = "/images/pothos.jpg",
-                    CareInstructions = "الري عند جفاف التربة السطحية، تقليم الأطراف الذابلة، وتغذيتها بالمغذي الخضري شهرياً."
-                };
-                return View(mock);
+                return NotFound();
             }
         }
 
@@ -142,14 +128,7 @@ namespace Ghiras.Web.Controllers
             }
             catch
             {
-                plant = new PlantViewModel
-                {
-                    PlantId = id,
-                    PlantName = "نبتة البوتس (اللبلاب)",
-                    ScientificName = "Epipremnum aureum",
-                    CategoryId = 1,
-                    CareInstructions = "الري مرة أسبوعياً."
-                };
+                plant = null;
             }
 
             if (plant == null) return NotFound();
