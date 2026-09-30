@@ -31,6 +31,12 @@ namespace Ghiras.Infrastructure.Persistence
             modelBuilder.Entity<Plant>()
                 .HasKey(p => p.PlantId);
 
+            modelBuilder.Entity<Plant>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             modelBuilder.Entity<PlantCategory>()
                 .HasKey(c => c.CategoryId);
 

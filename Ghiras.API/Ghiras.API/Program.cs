@@ -41,6 +41,14 @@ using (var scope = app.Services.CreateScope())
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         dbContext.Database.EnsureCreated();
 
+        // التأكد التلقائي من وجود عمود UserId في جدول Plants بقاعدة البيانات
+        dbContext.Database.ExecuteSqlRaw(@"
+            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Plants]') AND name = 'UserId')
+            BEGIN
+                ALTER TABLE [dbo].[Plants] ADD [UserId] INT NULL;
+            END
+        ");
+
         // التأكد التلقائي من وجود جدول PlantImages في قاعدة البيانات
         dbContext.Database.ExecuteSqlRaw(@"
             IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'PlantImages')

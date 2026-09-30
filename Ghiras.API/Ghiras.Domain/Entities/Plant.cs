@@ -23,6 +23,11 @@ namespace Ghiras.Domain.Entities
         [ForeignKey("CategoryId")]
         public PlantCategory? Category { get; set; }
 
+        public int? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
+
         public ICollection<PlantImage>? Images { get; set; }
 
         public ICollection<AIDiagnosis>? Diagnoses { get; set; }

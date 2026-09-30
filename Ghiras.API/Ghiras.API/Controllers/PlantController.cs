@@ -16,9 +16,13 @@ namespace Ghiras.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int? userId)
         {
             var plants = await _plantRepository.GetAllAsync();
+            if (userId.HasValue && userId.Value > 0)
+            {
+                plants = plants.Where(p => p.UserId == null || p.UserId == userId.Value);
+            }
             return Ok(plants);
         }
 
