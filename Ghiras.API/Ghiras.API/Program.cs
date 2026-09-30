@@ -49,6 +49,23 @@ using (var scope = app.Services.CreateScope())
                 DELETE FROM [dbo].[PlantImages] WHERE [PlantId] IN (SELECT [PlantId] FROM [dbo].[Plants] WHERE [UserId] IS NULL);
                 DELETE FROM [dbo].[Plants] WHERE [UserId] IS NULL;
             END
+
+            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'PlantImages')
+            BEGIN
+                CREATE TABLE [dbo].[PlantImages] (
+                    [ImageId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+                    [PlantId] INT NOT NULL,
+                    [ImageUrl] NVARCHAR(MAX) NOT NULL,
+                    [FileName] NVARCHAR(MAX) NULL,
+                    [IsPrimary] BIT NOT NULL DEFAULT 1,
+                    [UploadedAt] DATETIME2 NOT NULL DEFAULT GETDATE(),
+                    CONSTRAINT [FK_PlantImages_Plants_PlantId] FOREIGN KEY ([PlantId]) REFERENCES [dbo].[Plants] ([PlantId]) ON DELETE CASCADE
+                );
+            END
+            ELSE IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[PlantImages]') AND name = 'FileName')
+            BEGIN
+                ALTER TABLE [dbo].[PlantImages] ADD [FileName] NVARCHAR(MAX) NULL;
+            END
         ");
     }
     catch (Exception ex)
